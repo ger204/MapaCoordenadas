@@ -85,19 +85,23 @@ void enumerarMapa(){
   if(entrada.good()){
     std::cout << "ENTRADA EN BUEN ESTADO" << '\n';
 
-      for (int i = 0; i < 6; i++) {
-        entrada.getline(linea,6);
-        std::cout << linea << '\n';
+        for (int i = 0; i < 4; i++) {
 
-        if (strcmp(linea, "[  ] ") == 0) {
-          std::cout << "HA ENTRADO AL IF" << '\n';
-          salida << "[" << i << " ] ";
+            for (int e = 0; e < 4; e++) {
+
+              entrada.getline(linea,6);
+              std::cout << linea << '\n';
+
+              if (strcmp(linea, "[  ] ") == 0) {
+                std::cout << "HA ENTRADO AL IF" << '\n';
+                salida << "[" << i << e << "] ";
+              }
+
+            }
+
         }
 
-      }
-
-     entrada.close();
-     salida.close();
     }
-
+    entrada.close();
+    salida.close();
 }
