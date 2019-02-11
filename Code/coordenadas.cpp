@@ -96,7 +96,6 @@ void enumerarMapa(){
 
       }
 
-
      entrada.close();
      salida.close();
     }
