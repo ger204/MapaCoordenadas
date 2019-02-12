@@ -83,28 +83,25 @@ void enumerarMapa(){
   char linea[6];
   int i1 = 0;
   int e1 = 0;
-  int count = 0;
 
   if(entrada.good()){
     std::cout << "ENTRADA EN BUEN ESTADO" << '\n';
 
-                while (entrada.read( linea, 5 )) {
-                  std::cout << "Ha entrado al WHILE" << '\n';
-                  std::cout << linea << '\n';
+                while (entrada.read( (char*) &linea, sizeof(linea)-1 )) {
 
-                        if ( i1<5 ) {
-                          std::cout << "001" << '\n';
-                            if (e1<5) {
-                              std::cout << "002" << '\n';
-                                if (strcmp(linea,"[  ] " ) == 0) {
-                                    std::cout << "HA ENTRADO AL IF" << '\n';
-                                    salida << "[" << i1 << e1 << "] ";
-                                  }
-                                e1++;
+                          if (strcmp(linea,"[  ] " ) == 0) {
+                              salida << "[" << i1 << e1 << "] ";
                             }
-                          salida << endl;
-                          i1++;
-                        }
+                          else{
+                            salida << "[" << i1 << e1 << "] ";
+                            salida << endl;
+                          }
+
+                            e1++;
+                            if (e1==4) {
+                              i1++;
+                              e1 = 0;
+                            }
                   }
       entrada.close();
       salida.close();
