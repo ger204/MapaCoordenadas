@@ -28,7 +28,6 @@ coordenada pedirCord();
 /*Main*/
 
 int main(){
-  mostrarMapa();
   enumerarMapa();
   return 0;
 }
@@ -79,30 +78,41 @@ void enumerarMapa(){
   ofstream salida;
 
   entrada.open(DIR_MAPA);
-  salida.open(DIR_MAPA_1);
+  salida.open(DIR_MAPA_1,ios::trunc);
 
   char linea[6];
 
   if(entrada.good()){
     std::cout << "ENTRADA EN BUEN ESTADO" << '\n';
+    int i = 0
+    int e = 0
+    int count = 0;
 
-        for (int i = 0; i < 4; i++) {
+                while (entrada.read( (char*) &linea, sizeof(linea)-1 )) {
+                  std::cout << "Ha entrado al WHILE" << '\n';
+                  std::cout << linea << '\n';
 
-            for (int e = 0; e < 4; e++) {
+                        for (int i = 0; i < 4; i++) {
 
-              entrada.getline(linea,6);
-              std::cout << linea << '\n';
+                            for (int e = 0; e < 4; e++) {
 
-              if (strcmp(linea, "[  ] ") == 0) {
-                std::cout << "HA ENTRADO AL IF" << '\n';
-                salida << "[" << i << e << "] ";
-              }
-
-            }
-
-        }
-
+                                if (strcmp(linea,"[  ] " ) == 0) {
+                                    std::cout << "HA ENTRADO AL IF" << '\n';
+                                    salida << "[" << i << e << "] ";
+                                  }
+                                }
+                              salida << endl;
+                            }
+                        }
+      entrada.close();
+      salida.close();
     }
-    entrada.close();
-    salida.close();
+
+    else {
+      std::cout << "ENTRADA EN MAL ESTADO" << '\n';
+      entrada.close();
+      salida.close();
+    }
+
+
 }
