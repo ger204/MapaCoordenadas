@@ -85,7 +85,6 @@ void enumerarMapa(){
   int e1 = 0;
 
   if(entrada.good()){
-    std::cout << "ENTRADA EN BUEN ESTADO" << '\n';
 
                 while (entrada.read( (char*) &linea, sizeof(linea)-1 )) {
 
