@@ -81,29 +81,31 @@ void enumerarMapa(){
   salida.open(DIR_MAPA_1,ios::trunc);
 
   char linea[6];
+  int i1 = 0;
+  int e1 = 0;
+  int count = 0;
 
   if(entrada.good()){
     std::cout << "ENTRADA EN BUEN ESTADO" << '\n';
-    int i = 0
-    int e = 0
-    int count = 0;
 
-                while (entrada.read( (char*) &linea, sizeof(linea)-1 )) {
+                while (entrada.read( linea, 5 )) {
                   std::cout << "Ha entrado al WHILE" << '\n';
                   std::cout << linea << '\n';
 
-                        for (int i = 0; i < 4; i++) {
-
-                            for (int e = 0; e < 4; e++) {
-
+                        if ( i1<5 ) {
+                          std::cout << "001" << '\n';
+                            if (e1<5) {
+                              std::cout << "002" << '\n';
                                 if (strcmp(linea,"[  ] " ) == 0) {
                                     std::cout << "HA ENTRADO AL IF" << '\n';
-                                    salida << "[" << i << e << "] ";
+                                    salida << "[" << i1 << e1 << "] ";
                                   }
-                                }
-                              salida << endl;
+                                e1++;
                             }
+                          salida << endl;
+                          i1++;
                         }
+                  }
       entrada.close();
       salida.close();
     }
