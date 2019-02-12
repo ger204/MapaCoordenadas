@@ -80,12 +80,11 @@ void enumerarMapa(){
   salida.open(DIR_MAPA_1,ios::trunc);
 
   char linea[6];
-
+  int i1 = 0;
+  int e1 = 0;
   if(entrada.good()){
     std::cout << "ENTRADA EN BUEN ESTADO" << '\n';
-    int i = 0
-    int e = 0
-    int count = 0;
+
 
                 while (entrada.read( (char*) &linea, sizeof(linea)-1 )) {
                   std::cout << "Ha entrado al WHILE" << '\n';
