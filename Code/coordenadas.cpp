@@ -8,7 +8,9 @@ using namespace std;
 
 const char DIR_MAPA[] = "E:\\Programing\\C++\\BYME\\Oficial\\COORDENADAS\\Map\\mapa.txt";
 const char DIR_MAPA_1[] = "E:\\Programing\\C++\\BYME\\Oficial\\COORDENADAS\\Map\\mapa1.txt";
-const int VISUAL_CORD = 5;
+const char DIR_MAPA_O[] = "E:\\Programing\\C++\\BYME\\Oficial\\COORDENADAS\\Map\\mapa-original.txt";
+const int NUM_MAX = 4;
+const int NUM_MIN = 0;
 
 
 /*Structs*/
@@ -22,6 +24,7 @@ struct coordenada {
 /*Funciones*/
 void mostrarMapa();
 void enumerarMapa();
+void formatearMapa();
 void addCord(coordenada c);
 void mostrarCord(coordenada c);
 coordenada pedirCord();
@@ -30,6 +33,7 @@ coordenada pedirCord();
 /*Main*/
 
 int main(){
+  formatearMapa();
   mostrarMapa();
   enumerarMapa();
   addCord(pedirCord());
@@ -42,10 +46,20 @@ int main(){
 
 coordenada pedirCord(){
   coordenada c;
-  std::cout << "Punto X: ";
-  std::cin >> c.x;
-  std::cout << "Punto Y: ";
-  std::cin >> c.y;
+  int a;
+  int b;
+  do {
+    std::cout << "Punto X: ";
+    std::cin >> c.x;
+    a = c.x - '0';
+  } while( a > NUM_MAX -1 || a < NUM_MIN);
+
+  do {
+    std::cout << "Punto Y: ";
+    std::cin >> c.y;
+    b = c.y - '0';
+  } while( b > NUM_MAX || b < NUM_MIN);
+
   return c;
 }
 
@@ -53,8 +67,8 @@ coordenada pedirCord(){
 /*Mostrar Coordenada*/
 
 void mostrarCord(coordenada c){
-  std::cout << "X: " << c.x << '\n';
-  std::cout << "Y: " << c.y << '\n';
+    std::cout << "X: " << c.x << '\n';
+    std::cout << "Y: " << c.y << '\n';
 }
 
 
@@ -72,7 +86,12 @@ void mostrarMapa(){
     }
     entrada.close();
   }
-  entrada.close();
+
+  else{
+    std::cout << "Error 04: No se puede leer el ARCHIVO" << DIR_MAPA << '\n';
+    entrada.close();
+  }
+
 }
 
 
@@ -151,7 +170,8 @@ void addCord(coordenada c){
       std::cout << comb1 << '\n';
 
       while (entrada.read( (char*) &linea, sizeof(linea)-1) ) {
-
+        std::cout << "HA ENTRADO AL WHILE" << '\n';
+        std::cout << linea << '\n';
         if (strcmp(linea,comb1) == 0 || strcmp(linea,comb2) == 0) {
             salida << "[++] ";
 
@@ -161,6 +181,16 @@ void addCord(coordenada c){
             }
 
           }
+
+        else if (strcmp(linea,"[++] ") == 0 || strcmp(linea,"[++]\n") == 0) {
+
+            if (strcmp(linea,"[++] ") == 0) {
+              salida << "[++] ";
+            }
+            else{
+              salida << "[++]\n";
+            }
+        }
 
         else {
           salida << "[  ] ";
@@ -183,5 +213,30 @@ void addCord(coordenada c){
       std::cout << "Error 02: NO se puede leer el ARCHIVO " << DIR_MAPA << '\n';
       entrada.close();
       salida.close();
+  }
+}
+
+
+/*Formatear Mapa*/
+
+void formatearMapa(){
+  ifstream ent;
+  ofstream sal;
+
+  ent.open(DIR_MAPA_O);
+  sal.open(DIR_MAPA,ios::trunc);
+
+  char linea[100];
+  if (ent.good()) {
+    while (!ent.eof()) {
+      ent.getline(linea,100);
+      sal << linea << '\n';
+    }
+  }
+
+  else{
+    std::cout << "Error 03: NO se puede leer el ARCHIVO " << DIR_MAPA_O << '\n';
+    ent.close();
+    sal.close();
   }
 }
