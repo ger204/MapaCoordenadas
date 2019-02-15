@@ -161,7 +161,8 @@ void addCord(coordenada c){
   char comb2[6] = {'[',x,y,']','\n'};
   int i1 = 0;
   int e1 = 0;
-
+  int num = 5;
+  int cnt = 0;
   entrada.open(DIR_MAPA_1);
   salida.open(DIR_MAPA,ios::trunc);
 
@@ -169,9 +170,19 @@ void addCord(coordenada c){
 
       std::cout << comb1 << '\n';
 
-      while (entrada.read( (char*) &linea, sizeof(linea)-1) ) {
+      while (entrada.read( (char*) &linea, num) ) {
         std::cout << "HA ENTRADO AL WHILE" << '\n';
         std::cout << linea << '\n';
+
+        if (cnt == NUM_MAX - 2) {
+          num--;
+          cnt = 0;
+        }
+
+        else{
+          num = 6;
+        }
+
         if (strcmp(linea,comb1) == 0 || strcmp(linea,comb2) == 0) {
             salida << "[++] ";
 
@@ -203,6 +214,8 @@ void addCord(coordenada c){
             e1 = 0;
             salida << endl;
           }
+          
+          cnt++;
       }
 
       entrada.close();
