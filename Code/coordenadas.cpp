@@ -111,20 +111,28 @@ void enumerarMapa(){
   if(entrada.good()){
 
                 while (entrada.read( (char*) &linea, sizeof(linea)-1 ) ) {
-
+                          std::cout << linea << '\n';
                           if (strcmp(linea,"[  ] " ) == 0 || strcmp(linea,"[  ]\n") == 0) {
-                              salida << "[" << i1 << e1 << "] ";
 
-                              if (strcmp(linea,"[  ]\n") == 0) {
-                                salida << endl;
+                             if (strcmp(linea,"[  ] " ) == 0 ){
+                                salida << "[" << i1 << e1 << "] ";
+                              }
+
+
+                             if (strcmp(linea,"[  ]\n") == 0) {
+                                salida << "[" << i1 << e1 << "]\n";
                               }
 
                             }
 
                           else if (strcmp(linea,"[++] " ) == 0 || strcmp(linea,"[++]\n") == 0) {
-                            salida << "[++] ";
+
+                            if (strcmp(linea,"[++] ") == 0) {
+                              salida << "[++] ";
+                            }
+
                             if (strcmp(linea,"[++]\n") == 0) {
-                              salida << endl;
+                              salida << "[++]\n";
                             }
                           }
 
@@ -150,89 +158,79 @@ void enumerarMapa(){
 
 /*Añadir Coordenada*/
 void addCord(coordenada c){
-
   ifstream entrada;
   ofstream salida;
 
-  char linea[6];
-  char x = c.x;
-  char y = c.y;
-  char comb1[6] = {'[',x,y,']',' '};
-  char comb2[6] = {'[',x,y,']','\n'};
-  int i1 = 0;
-  int e1 = 0;
-  int num = 5;
-  int cnt = 0;
   entrada.open(DIR_MAPA_1);
   salida.open(DIR_MAPA,ios::trunc);
 
-  if (entrada.good()) {
+  char linea[6];
+  int i1 = 0;
+  int e1 = 0;
+  char comb1[6] = {'[',c.x,c.y,']',' '};
+  char comb2[6] = {'[',c.x,c.y,']','\n'};
 
-      std::cout << comb1 << '\n';
+  if(entrada.good()){
+    std::cout << sizeof("[00] ") + sizeof('\n') << '\n';
+                while (entrada.read( (char*) &linea, sizeof(linea)-1 ) ) {
 
-      while (entrada.read( (char*) &linea, num) ) {
-        std::cout << "HA ENTRADO AL WHILE" << '\n';
-        std::cout << linea << '\n';
+                          std::cout << linea << '\n';
 
-        if (cnt == NUM_MAX - 2) {
-          num--;
-          cnt = 0;
-        }
+                          if (strcmp(linea,comb1 ) == 0 || strcmp(linea,comb2) == 0) {
 
-        else{
-          num = 6;
-        }
+                              if (strcmp(linea,comb1) == 0) {
+                                salida << "[++] ";
+                              }
 
-        if (strcmp(linea,comb1) == 0 || strcmp(linea,comb2) == 0) {
-            salida << "[++] ";
+                              if (strcmp(linea,comb2) == 0) {
+                                salida << "[++]\n";
+                              }
 
-            if (strcmp(linea,comb2) == 0) {
-              salida << endl;
-              i1++;
-            }
+                            }
 
-          }
+                          else if (strcmp(linea,"[++] " ) == 0 || strcmp(linea,"[++]\n") == 0) {
 
-        else if (strcmp(linea,"[++] ") == 0 || strcmp(linea,"[++]\n") == 0) {
+                            if (strcmp(linea,"[++] ") == 0) {
+                              salida << "[++] ";
+                            }
 
-            if (strcmp(linea,"[++] ") == 0) {
-              salida << "[++] ";
-            }
-            else{
-              salida << "[++]\n";
-            }
-        }
+                            if (strcmp(linea,"[++]\n") == 0) {
+                              salida << "[++]\n";
+                            }
 
-        else {
-          salida << "[  ] ";
-        }
+                          }
 
+                          else {
+                            salida << "[  ]";
+                            if (e1==3) {
+                              salida << endl;
+                            }
+                            else {
+                              salida << " ";
+                            }
+                          }
 
-          e1++;
-          if (e1==4) {
-            i1++;
-            e1 = 0;
-            salida << endl;
-          }
-          
-          cnt++;
-      }
-
+                          e1++;
+                          if (e1==4) {
+                            i1++;
+                            e1 = 0;
+                          }
+                  }
       entrada.close();
       salida.close();
-  }
+    }
 
-  else{
-      std::cout << "Error 02: NO se puede leer el ARCHIVO " << DIR_MAPA << '\n';
+    else {
+      std::cout << "Error 01: NO se puede leer el ARCHIVO " << DIR_MAPA << '\n';
       entrada.close();
       salida.close();
-  }
+    }
+
 }
-
-
 /*Formatear Mapa*/
 
-void formatearMapa(){
+void formatearMapa() {
+
   ifstream ent;
   ofstream sal;
 
