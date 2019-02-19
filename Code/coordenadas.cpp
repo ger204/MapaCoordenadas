@@ -26,6 +26,7 @@ void mostrarMapa();
 void enumerarMapa();
 void formatearMapa();
 void addCord(coordenada c);
+void delCord(coordenada c);
 void mostrarCord(coordenada c);
 coordenada pedirCord();
 
@@ -33,11 +34,6 @@ coordenada pedirCord();
 /*Main*/
 
 int main(){
-  formatearMapa();
-  mostrarMapa();
-  enumerarMapa();
-  addCord(pedirCord());
-  mostrarMapa();
   return 0;
 }
 
@@ -111,7 +107,6 @@ void enumerarMapa(){
   if(entrada.good()){
 
                 while (entrada.read( (char*) &linea, sizeof(linea)-1 ) ) {
-                          std::cout << linea << '\n';
                           if (strcmp(linea,"[  ] " ) == 0 || strcmp(linea,"[  ]\n") == 0) {
 
                              if (strcmp(linea,"[  ] " ) == 0 ){
@@ -171,10 +166,9 @@ void addCord(coordenada c){
   char comb2[6] = {'[',c.x,c.y,']','\n'};
 
   if(entrada.good()){
-    std::cout << sizeof("[00] ") + sizeof('\n') << '\n';
+
                 while (entrada.read( (char*) &linea, sizeof(linea)-1 ) ) {
 
-                          std::cout << linea << '\n';
 
                           if (strcmp(linea,comb1 ) == 0 || strcmp(linea,comb2) == 0) {
 
@@ -215,6 +209,72 @@ void addCord(coordenada c){
                             i1++;
                             e1 = 0;
                           }
+                  }
+      entrada.close();
+      salida.close();
+    }
+
+    else {
+      std::cout << "Error 01: NO se puede leer el ARCHIVO " << DIR_MAPA << '\n';
+      entrada.close();
+      salida.close();
+    }
+
+}
+
+/*Eliminar Coordenada*/
+void delCord(coordenada c){
+  ifstream entrada;
+  ofstream salida;
+
+  entrada.open(DIR_MAPA_1);
+  salida.open(DIR_MAPA,ios::trunc);
+
+  char linea[6];
+  int i1 = 0;
+  int e1 = 0;
+
+  if(entrada.good()){
+
+                while (entrada.read( (char*) &linea, sizeof(linea)-1 ) ) {
+
+                          if ((int)c.x - 48  == i1 && (int)c.y - 48 == e1) {
+                            salida << "[  ]";
+                            if (e1==3) {
+                              salida << "\n";
+                            }
+                            else{
+                              salida << " ";
+                            }
+                          }
+                          else{
+
+                              if ( strcmp(linea,"[++] ") == 0){
+                                    salida << "[++] ";
+                                  }
+
+                              else if (strcmp(linea,"[++]\n") == 0){
+                                    salida << "[++]\n";
+                                  }
+
+                              else {
+                                    salida << "[  ]";
+                                    if (e1==3) {
+                                      salida << "\n";
+                                    }
+                                    else{
+                                      salida << " ";
+                                    }
+                                  }
+
+                          }
+
+                          e1++;
+                          if (e1==4) {
+                            i1++;
+                            e1 = 0;
+                          }
+
                   }
       entrada.close();
       salida.close();
