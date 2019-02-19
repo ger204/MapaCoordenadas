@@ -1,0 +1,27 @@
+		  
+		   ----MAPA DE CORDENADAS X Y----
+			
+			 0    1    2    3
+		      0 [  ] [  ] [  ] [  ]
+		      1 [  ] [  ] [  ] [  ]
+		      2 [  ] [  ] [  ] [  ]
+		      3 [  ] [  ] [  ] [  ]
+			
+		      Agregar Coordenada...[1]
+		      Eliminar Coordenada..[2]
+		      Formatear Mapa.......[3]
+		      SALIR................[4]
+
+
+
+
+
+
+			   DESEAS SALIR?
+
+			   Si.........[1]
+			   No.........[2]
+			
+			
+			
+			

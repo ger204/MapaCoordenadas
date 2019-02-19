@@ -21,7 +21,7 @@ struct coordenada {
 };
 
 
-/*Funciones*/
+/*Funciones Programa*/
 void mostrarMapa();
 void enumerarMapa();
 void formatearMapa();
@@ -30,10 +30,27 @@ void delCord(coordenada c);
 void mostrarCord(coordenada c);
 coordenada pedirCord();
 
+/*Menús*/
+void menuAdd();
 
 /*Main*/
 
 int main(){
+    //system("color f0");
+    int op;
+    int yn;
+    do {
+      std::cout << "\t\t\tMAPA COORDENADAS X Y" << "\n\n";
+      std::cout << "\t\t\t   0    1    2    3" << '\n';
+      mostrarMapa();
+
+      std::cin >> op;
+
+      switch (op) {
+        case 1: std::cout << "1" << '\n';
+        break;
+      }
+    } while(op != 4 );
   return 0;
 }
 
@@ -73,12 +90,16 @@ void mostrarCord(coordenada c){
 void mostrarMapa(){
   ifstream entrada;
   char linea[100];
-
+  int i = 0;
   entrada.open(DIR_MAPA);
   if (entrada.good()) {
     while (!entrada.eof()) {
       entrada.getline(linea,100);
+      if (i<4) {
+        std::cout << "\t\t\t" << i << " ";
+      }
       std::cout << linea << '\n';
+      i++;
     }
     entrada.close();
   }
