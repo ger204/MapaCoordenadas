@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <cstring>
+#include <conio.h>
 
 using namespace std;
 
@@ -32,6 +33,9 @@ coordenada pedirCord();
 
 /*Menús*/
 void menuAdd();
+void menuDel();
+void menuFormat();
+int menuSalir();
 
 /*Main*/
 
@@ -40,15 +44,31 @@ int main(){
     int op;
     int yn;
     do {
-      std::cout << "\t\t\tMAPA COORDENADAS X Y" << "\n\n";
-      std::cout << "\t\t\t   0    1    2    3" << '\n';
+      system("cls");
+      std::cout << '\n';
+      std::cout << "\t\t       ------------------------" << '\n';
+      std::cout << "\t\t       | MAPA COORDENADAS X Y |" << '\n';
+      std::cout << "\t\t       ------------------------" << "\n\n";
       mostrarMapa();
-
+      std::cout << "\t\t\tAgregar Coordenada...[1]" << '\n';
+      std::cout << "\t\t\tEliminar Coordenada..[2]" << '\n';
+      std::cout << "\t\t\tFormatear Mapa.......[3]" << '\n';
+      std::cout << "\t\t\tSALIR................[4]" << "\n\n";
+      std::cout << "\t\t\tQue desea hacer: " ;
       std::cin >> op;
 
       switch (op) {
-        case 1: std::cout << "1" << '\n';
-        break;
+        case 1:
+                menuAdd();
+                break;
+        case 2:
+                menuDel();
+                break;
+        case 3:
+                menuFormat();
+                break;
+        case 4: op = menuSalir();
+                break;
       }
     } while(op != 4 );
   return 0;
@@ -62,13 +82,13 @@ coordenada pedirCord(){
   int a;
   int b;
   do {
-    std::cout << "Punto X: ";
+    std::cout << "\t\t\tFila: ";
     std::cin >> c.x;
     a = c.x - '0';
   } while( a > NUM_MAX -1 || a < NUM_MIN);
 
   do {
-    std::cout << "Punto Y: ";
+    std::cout << "\t\t\tColumna: ";
     std::cin >> c.y;
     b = c.y - '0';
   } while( b > NUM_MAX || b < NUM_MIN);
@@ -93,6 +113,7 @@ void mostrarMapa(){
   int i = 0;
   entrada.open(DIR_MAPA);
   if (entrada.good()) {
+    std::cout << "\t\t\t    0    1    2    3" << '\n';
     while (!entrada.eof()) {
       entrada.getline(linea,100);
       if (i<4) {
@@ -231,6 +252,7 @@ void addCord(coordenada c){
                             e1 = 0;
                           }
                   }
+      std::cout << "\n\t\t\t(Coordenada agregada con EXITO)" << '\n';
       entrada.close();
       salida.close();
     }
@@ -297,12 +319,13 @@ void delCord(coordenada c){
                           }
 
                   }
+      std::cout << "\n\t\t\t(Coordenada eliminada con EXITO)" << '\n';
       entrada.close();
       salida.close();
     }
 
     else {
-      std::cout << "Error 01: NO se puede leer el ARCHIVO " << DIR_MAPA << '\n';
+      std::cout << "\t\t\tError 01: NO se puede leer el ARCHIVO " << DIR_MAPA << '\n';
       entrada.close();
       salida.close();
     }
@@ -327,8 +350,84 @@ void formatearMapa() {
   }
 
   else{
-    std::cout << "Error 03: NO se puede leer el ARCHIVO " << DIR_MAPA_O << '\n';
+    std::cout << "\t\t\tError 03: NO se puede leer el ARCHIVO " << DIR_MAPA_O << '\n';
     ent.close();
     sal.close();
+  }
+}
+
+
+/*Menú Añadir Coordenada*/
+
+void menuAdd(){
+    system("cls");
+    enumerarMapa();
+    std::cout << '\n';
+    std::cout << "\t\t       ----------------------" << "\n";
+    std::cout << "\t\t       | AGREGAR COORDENADA |" << "\n";
+    std::cout << "\t\t       ----------------------" << "\n\n";
+    mostrarMapa();
+    addCord(pedirCord());
+    getch();
+}
+
+/*Menú Eliminar Coordenada*/
+
+void menuDel(){
+    system("cls");
+    enumerarMapa();
+    std::cout << '\n';
+    std::cout << "\t\t      -----------------------" << "\n";
+    std::cout << "\t\t      | ELIMINAR COORDENADA |" << "\n";
+    std::cout << "\t\t      -----------------------" << "\n\n";
+    mostrarMapa();
+    delCord(pedirCord());
+    getch();
+}
+
+/*Menú Formatear Mapa*/
+
+void menuFormat() {
+  system("cls");
+  int opc = 0;
+  std::cout << "\t\t              ------------------" << "\n";
+  std::cout << "\t\t              | FORMATEAR MAPA |" << "\n";
+  std::cout << "\t\t              ------------------" << "\n\n";
+  do {
+    std::cout << "\t\tSeguro que desea Formatear el Mapa? SI[1].....NO[2]: ";
+    std::cin >> opc;
+  } while(opc != 1 && opc != 2);
+  if (opc == 1) {
+    formatearMapa();
+    std::cout << "\t\t             (Operacion APLICADA)" << '\n';
+    getch();
+  }
+  else{
+    std::cout << '\n';
+    std::cout << "\t\t             (Operacion CANCELADA)" << '\n';
+    getch();
+  }
+}
+
+/*Menú Salir*/
+
+int menuSalir(){
+  system("cls");
+  int opc = 0;
+  std::cout << "\t\t              ---------" << "\n";
+  std::cout << "\t\t              | SALIR |" << "\n";
+  std::cout << "\t\t              ---------" << "\n\n";
+  do {
+    std::cout << "\t\tSeguro que desea SALIR? SI[1].....NO[2]: ";
+    std::cin >> opc;
+  } while(opc != 1 && opc != 2);
+  if (opc == 1) {
+    return 4;
+  }
+  else{
+    std::cout << '\n';
+    std::cout << "\t\t        (Operacion CANCELADA)" << '\n';
+    getch();
+    return 5;
   }
 }
