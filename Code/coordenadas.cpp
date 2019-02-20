@@ -399,6 +399,7 @@ void menuFormat() {
   } while(opc != 1 && opc != 2);
   if (opc == 1) {
     formatearMapa();
+    enumerarMapa();
     std::cout << "\t\t             (Operacion APLICADA)" << '\n';
     getch();
   }
