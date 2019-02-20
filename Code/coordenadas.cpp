@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <cstring>
 #include <conio.h>
+#include <typeinfo>
 
 using namespace std;
 
@@ -40,7 +41,7 @@ int menuSalir();
 /*Main*/
 
 int main(){
-    //system("color f0");
+    system("color f0");
     int op;
     int yn;
     do {
@@ -83,14 +84,14 @@ coordenada pedirCord(){
   int b;
   do {
     std::cout << "\t\t\tFila: ";
-    std::cin >> c.x;
-    a = c.x - '0';
+    std::cin >> a;
+    c.x = (char)a + 48;
   } while( a > NUM_MAX -1 || a < NUM_MIN);
 
   do {
     std::cout << "\t\t\tColumna: ";
-    std::cin >> c.y;
-    b = c.y - '0';
+    std::cin >> b;
+    c.y = (char)b + 48;
   } while( b > NUM_MAX || b < NUM_MIN);
 
   return c;
